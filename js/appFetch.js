@@ -27,35 +27,37 @@ function cargarNombres(e) {
   if (cantidadSeleccionada !== '') {
     url += `amount=${cantidadSeleccionada}&`;
   }
-  
-  const xhr = new XMLHttpRequest();
-  xhr.open('GET', url, true);
-  xhr.onload = function() {
-    if (this.status === 200) {
-      
-      const nombres = JSON.parse(this.responseText)
+
+  //fetch
+  fetch(url)
+    .then(function(res) {
+      return res.json();
+    })
+    .then(function(data) {
+      console.log(data);
       
       let templateNombres = `
         <h2>Nombres Generados</h2>
       `;
-
+  
       templateNombres += `
         <ul class="lista">
       `
-      nombres.forEach(nombre => {
+      data.forEach(nombre => {
         templateNombres += `
           <li>${nombre.name}</li>
         `
       });
-
+  
       templateNombres += `
         </ul">
       `
 
       const div = document.getElementById('resultado');
-      div.innerHTML = templateNombres;
-    }
-  }
-  
-  xhr.send();
+      div.innerHTML = templateNombres
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
+    
 }
