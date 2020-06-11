@@ -30,34 +30,19 @@ function cargarNombres(e) {
 
   //fetch
   fetch(url)
-    .then(function(res) {
-      return res.json();
-    })
-    .then(function(data) {
-      console.log(data);
-      
-      let templateNombres = `
-        <h2>Nombres Generados</h2>
-      `;
-  
-      templateNombres += `
-        <ul class="lista">
-      `
+    .then( res => res.json() )
+    .then( data => {
+      let templateNombres = `<h2>Nombres Generados</h2>`;
+      templateNombres += `<ul class="lista">`
       data.forEach(nombre => {
         templateNombres += `
           <li>${nombre.name}</li>
         `
       });
-  
-      templateNombres += `
-        </ul">
-      `
+      templateNombres += `</ul">`
 
       const div = document.getElementById('resultado');
       div.innerHTML = templateNombres
     })
-    .catch(function(error) {
-      console.log(error);
-    });
-    
+    .catch( error => console.log(error) );
 }
